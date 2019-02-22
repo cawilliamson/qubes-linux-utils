@@ -40,7 +40,7 @@ function build_modules_img() {
 
     mkdir /tmp/qubes-modules-$kver
     truncate -s 400M /tmp/qubes-modules-$kver.img
-    mkfs -t ext3 -F /tmp/qubes-modules-$kver.img > /dev/null
+    mkfs -t xfs -f /tmp/qubes-modules-$kver.img > /dev/null
     mount /tmp/qubes-modules-$kver.img /tmp/qubes-modules-$kver -o loop
     cp -a -t /tmp/qubes-modules-$kver /lib/modules/$kver
     cp "/boot/vmlinuz-$kver" "/tmp/qubes-modules-$kver/vmlinuz"
@@ -57,7 +57,7 @@ function build_initramfs() {
     dracut --nomdadmconf --nolvmconf --force \
         --modules "kernel-modules qubes-vm-simple" \
         --conf /dev/null --confdir /var/empty \
-        -d "xenblk xen-blkfront cdrom ext4 jbd2 crc16 dm_snapshot" \
+        -d "xenblk xen-blkfront cdrom xfs jbd2 crc16 dm_snapshot" \
         $output_file $kver
     chmod 644 "$output_file"
 }

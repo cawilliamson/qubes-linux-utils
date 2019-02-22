@@ -78,7 +78,7 @@ EOF
     echo Qubes: done.
 fi
 
-/sbin/modprobe ext4
+/sbin/modprobe xfs
 
 mkdir -p /sysroot
 mount /dev/mapper/dmroot /sysroot -o ro
@@ -91,7 +91,7 @@ if ! [ -d "$NEWROOT/lib/modules/$kver/kernel" ]; then
 
     # Mount only `uname -r` subdirectory, to leave the rest of /lib/modules writable
     mkdir -p /tmp/modules
-    mount -n -t ext3 /dev/xvdd /tmp/modules
+    mount -n -t xfs /dev/xvdd /tmp/modules
     if ! [ -d "$NEWROOT/lib/modules/$kver" ]; then
         mount "$NEWROOT" -o remount,rw
         mkdir -p "$NEWROOT/lib/modules/$kver"
